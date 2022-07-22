@@ -43,6 +43,15 @@
              android:text="%"
              android:textSize="30sp" />
       </LinearLayout>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Weather Progress.."
+          android:textAlignment="center"
+          android:textSize="20dp"
+          >
+
+      </TextView>
 
 
       <ProgressBar

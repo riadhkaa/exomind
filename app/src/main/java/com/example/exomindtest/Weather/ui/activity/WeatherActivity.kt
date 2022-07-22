@@ -10,9 +10,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -100,15 +98,6 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideActionBar(){
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {
-        }
-    }
-
     fun startUpdates() {
         currentProgress = 0
         stopUpdates()
@@ -123,12 +112,12 @@ class WeatherActivity : AppCompatActivity() {
                 delay(10000)
             }
         }
-
     }
     fun stopUpdates() {
         job?.cancel()
         job = null
     }
+
     private fun cityCall(){
         if (currentProgress == 0 ){
             initData("Rennes")
@@ -150,33 +139,32 @@ class WeatherActivity : AppCompatActivity() {
             displayElement = true
         }
     }
+
     private fun displayAlert(){
         val toast1 = Toast.makeText(applicationContext, waiting1, duration)
         val toast2 = Toast.makeText(applicationContext, waiting2, duration)
         val toast3 = Toast.makeText(applicationContext, waiting3, duration)
 
         job = scope.launch {
-            while(true) {
+            while(currentProgress < 60) {
                 toast1.show()
                 delay(6000)
             }
         }
         job = scope.launch {
-            while(true) {
+            while(currentProgress < 60) {
                 toast2.show()
                 delay(6000)
             }
         }
         job = scope.launch {
-            while(true) {
+            while(currentProgress < 60) {
                 toast3.show()
                 delay(6000)
             }
         }
-
-
-
     }
+
     private fun displayButton(){
         if (displayElement == true){
             progressbar?.visibility = View.GONE
@@ -196,6 +184,15 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 
+    private fun hideActionBar(){
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
+    }
+    
     override fun onBackPressed() {
         super.onBackPressed()
         startActivity(Intent(this@WeatherActivity, HomeActivity::class.java))

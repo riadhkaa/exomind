@@ -32,11 +32,10 @@ class WeatherAdapter(val viewModel:WeatherViewModel , val myDataset: ArrayList<W
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val weather = myDataset?.get(position)
-        for (w in weather.weather){
-            holder.region?.text = (w.main)
-            holder.temperature?.text = (w.description)
-            holder.clouds?.text = (w.id)
-        }
+        holder.region?.text = weather.region
+        holder.clouds?.text = weather.cloud.cloud
+        holder.temperature?.text = weather.main.temperature
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
